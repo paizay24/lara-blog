@@ -71,10 +71,33 @@
                 </div>
             </div>
         </nav>
+        <main class=" py-3">
+            @auth
+            <div class="container">
+                <div class="row">
+                    <div class="col-3">
+                        @include('components.sidebar')
+                    </div>
+                    <div class=" col-9">
+                        @yield('content')
+                    </div>
+                </div>
 
-        <main class="py-4">
-            @yield('content')
+            </div>
+            @endauth
         </main>
+
+        @guest
+            @yield('content')
+        @endguest
     </div>
+    @if(session('status'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                showToast("{{ session('status') }}");
+            });
+        </script>
+    @endif
 </body>
+
 </html>
