@@ -44,18 +44,10 @@ class DatabaseSeeder extends Seeder
             ]);
         };
 
-        $title = fake()->sentence(10);
-        $description = fake()->realText(200);
+        Post::factory(100)->create();
 
-        Post::factory(100)->create(
-            [
-            'title' =>$title,
-            'slug'  => Str::slug($title,'-'),
-            'description' => $description ,
-            'excerpt' => Str::words($description, 50, '.....'),
-            'user_id' => User::inRandomOrder()->first()->id,
-            'category_id' => Category::inRandomOrder()->first()->id
-            ]
-        );
+
+
+
     }
 }

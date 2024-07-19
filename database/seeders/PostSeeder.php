@@ -1,23 +1,28 @@
 <?php
+namespace Database\Factories;
 
-namespace Database\Seeders;
-
+use App\Models\Post;
 use App\Models\User;
 use App\Models\Category;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class PostSeeder extends Seeder
+class PostFactory extends Factory
 {
-    /**
-     * Run the database seeds.
-     */
+    protected $model = Post::class;
 
-    public function up():void
+    public function definition()
     {
+        $title = $this->faker->sentence(10); // Ensure a new sentence each time
+        $description = $this->faker->realText(100); // Ensure a new description each time
 
-
-
+        return [
+            'title' => $title,
+            'slug' => Str::slug($title, '-'),
+            'description' => $description,
+            'excerpt' => Str::words($description, 50, '.....'),
+            'user_id' => User::inRandomOrder()->first()->id,
+            'category_id' => Category::inRandomOrder()->first()->id,
+        ];
     }
 }
