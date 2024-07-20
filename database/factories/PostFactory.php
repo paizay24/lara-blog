@@ -14,7 +14,7 @@ class PostFactory extends Factory
     public function definition()
     {
         $title = $this->faker->sentence(10); // Ensure a new sentence each time
-        $description = $this->faker->realText(100); // Ensure a new description each time
+        $description = $this->faker->realText(2000); // Ensure a new description each time
 
         return [
             'title' => $title,

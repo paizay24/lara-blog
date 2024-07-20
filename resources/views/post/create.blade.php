@@ -13,7 +13,7 @@
                 <div class=" card-body">
                     <h4>Create Post</h4>
 
-                    <form action="{{ route('post.store') }}" method="POST">
+                    <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label for="title" class="form-label">Title</label>
@@ -52,11 +52,11 @@
                         <div class="mb-3">
 
                             <label for="" class="form-label">Choose Featured Image</label>
-                            <input type="file"
-                                class=" form-control @error('featured-img') is-invalid
+                            <input type="file" name="featured_image"
+                                class=" form-control @error('featured_image') is-invalid
 
                             @enderror">
-                            @error('featured-img')
+                            @error('featured_image')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
