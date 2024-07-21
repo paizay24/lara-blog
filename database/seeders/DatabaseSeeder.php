@@ -17,17 +17,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Pai Zay',
-            'email' => 'pzo@gmail.com',
-            'password' => Hash::make('pzo123123')
+        $this->call([
+            UserSeeder::class,
+            CategorySeeder::class,
+            PostSeeder::class
+
         ]);
 
-      
 
-        Post::factory(100)->create();
+
 
 
 
