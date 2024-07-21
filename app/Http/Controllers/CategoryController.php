@@ -14,6 +14,10 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function __construct(){
+        $this->middleware('admin');
+    }
     public function index()
     {
         $categories = Category::latest()->get();
