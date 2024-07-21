@@ -24,6 +24,7 @@
               <th scope="row">{{ $category->id }}</th>
               <td>{{ $category->title }}</td>
               <td><div class=" d-flex gap-2">
+                @can('delete',$category)
                 <form action="{{ route('category.destroy',$category->id) }}" method="POST" class=" inline-block">
                     @csrf
                     @method('delete')
@@ -33,10 +34,13 @@
                     </button>
 
                 </form>
+                @endcan
 
-                    <a href="{{ route('category.edit',$category->id) }}" class="btn btn-sm btn-outline-primary">
-                        <i class="bi bi-pencil"></i>
-                    </a>
+                  @can('update',$category)
+                  <a href="{{ route('category.edit',$category->id) }}" class="btn btn-sm btn-outline-primary">
+                    <i class="bi bi-pencil"></i>
+                </a>
+                  @endcan
 
 
                 </div></td>

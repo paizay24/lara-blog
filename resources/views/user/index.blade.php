@@ -1,9 +1,10 @@
+
 @extends('layouts.app')
 @section('content')
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('post.index') }}">Post Lists</a></li>
+            <li class="breadcrumb-item"><a href="#">User Lists</a></li>
 
         </ol>
     </nav>
@@ -15,12 +16,12 @@
             <div class="">
                 @if (request('keyword'))
                     <span class="mb-0">Search By : " {{ request('keyword') }} "</span>
-                    <a href="{{ route('post.index') }}">
+                    <a href="{{ route('user.index') }}">
                         <i class="bi bi-trash3"></i>
                     </a>
                 @endif
             </div>
-            <form action="{{ route('post.index') }}" method="get">
+            <form action="{{ route('user.index') }}" method="get">
                 <div class="input-group">
                     <input type="text" class="form-control" name="keyword" required>
                     <button class="btn btn-secondary">
@@ -35,26 +36,22 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope=" col-10">title</th>
-                    <th scope="col">description</th>
-                    <th scope="col">Control</th>
+                    <th scope=" col-10">name</th>
+                    <th scope="col">email</th>
+                    <th scope="col">role</th>
+                    {{-- <th scope="col">Control</th> --}}
                     <th scope="col">Created_at</th>
                 </tr>
             </thead>
-            @forelse ($posts as $post)
+            @forelse ($users as $user)
                 <tbody>
                     <tr>
-                        <th scope="row">{{ $post->id }}</th>
-                        <td class=" w-25">{{ $post->title }}
-                            <div class=" d-flex gap-2 m-2">
+                        <th scope="row">{{ $user->id }}</th>
+                        <td class=" w-25">{{ $user->name }}
 
-                                <p class=" badge text-bg-secondary">
-                                    {{ App\Models\Category::find($post->category_id)->title }}</p>
-                                <p class=" badge text-bg-primary">{{ App\Models\User::find($post->user_id)->name }}</p>
-                            </div>
                         </td>
-                        <td class=" w-25">{{ Str::words($post->description, 10, '...') }}</td>
-                        <td>
+                        <td class=" w-25">{{ $user->email }}</td>
+                        {{-- <td>
                             <div class=" d-flex gap-2">
                                 @can('delete-post', $post)
                                     <form action="{{ route('post.destroy', $post->id) }}" method="POST" class=" inline-block">
@@ -80,15 +77,18 @@
 
 
                             </div>
+                        </td> --}}
+                        <td>
+                            {{ $user->role }}
                         </td>
                         <td>
                             <div>
                                 <i class="bi bi-calendar  me-2"></i>
-                                {{ $post->created_at->format('d F Y ') }}
+                                {{ $user->created_at->format('d F Y ') }}
                             </div>
                             <div>
                                 <i class="bi bi-alarm me-2"></i>
-                                {{ $post->created_at->format('h:i A ') }}
+                                {{ $user->created_at->format('h:i A ') }}
                             </div>
                         </td>
                     </tr>
@@ -97,7 +97,7 @@
             @endforelse
         </table>
         <div class="">
-            {{ $posts->onEachSide(1)->links() }}
+            {{ $users->onEachSide(1)->links() }}
         </div>
     </main>
 @endsection

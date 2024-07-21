@@ -37,7 +37,6 @@ class PostPolicy
      */
     public function update(User $user, Post $post): bool
     {
-        //
     }
 
     /**
@@ -45,7 +44,6 @@ class PostPolicy
      */
     public function delete(User $user, Post $post): bool
     {
-        //
     }
 
     /**

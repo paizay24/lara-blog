@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
@@ -77,6 +78,12 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request, Post $post)
     {
 
+
+        if (! Gate::allows('update-post', $post)) {
+            return abort(403);
+        }
+
+
         $post->title = $request->title;
         $post->slug = Str::slug($request->title);
         $post->description = $request->description;
@@ -101,6 +108,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if(! Gate::allows('delete-post',$post)){
+            return abort(403);
+        }
+
         $postTitle = $post->title;
         if(isset($post->featured_image)){
             Storage::delete('public/'.$post->featured_image);

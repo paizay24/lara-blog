@@ -25,24 +25,7 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('pzo123123')
         ]);
 
-       $categories = [
-            'Technology',
-            'Health',
-            'Travel',
-            'Food',
-            'Lifestyle',
-            'Education',
-            'Finance',
-
-        ];
-
-        foreach($categories as $category){
-            Category::factory()->create([
-                'title' => $category ,
-                'slug' => Str::slug($category,'-'),
-                'user_id' => User::inRandomOrder()->first()->id,
-            ]);
-        };
+      
 
         Post::factory(100)->create();
 
