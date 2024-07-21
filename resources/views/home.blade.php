@@ -16,7 +16,6 @@
 
                     {{ __('You are logged in!') }}
                 </div>
-                <div>{{ Auth::user() }}</div>
             </div>
         </div>
     </div>
