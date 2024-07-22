@@ -12,9 +12,17 @@
         <div class=" card p-3">
             <div class=" card-title">
                 <h5 class=" text-bold">{{ $post->title }}</h5>
+                <div class=" d-flex gap-3 ">
+                    <div class="badge text-bg-secondary">{{ $post->user->name }}</div>
+                    <div class="badge text-bg-secondary">{{ $post->category->title }}</div>
+                    <div class="badge text-bg-secondary">{{ $post->created_at->format('d F Y ') }}</div>
+                    <div class="badge text-bg-secondary"> {{  $post->created_at->format('h:i A ')}} </div>
+
+                </div>
             </div>
-            <div class=" card-body">
-                <h5 class=" text-bold">{{ $post->description }}</h5>
+            <hr>
+            <div class=" card-body p-0">
+                <p class=" ">{{ $post->description }}</p>
             </div>
             <div>
                 @isset($post->featured_image)

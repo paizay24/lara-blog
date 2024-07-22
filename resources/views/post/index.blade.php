@@ -49,9 +49,9 @@
                             <div class=" d-flex gap-2 m-2">
 
                                 <p class=" badge text-bg-secondary">
-                                    {{ App\Models\Category::find($post->category_id)->title }}</p>
+                                    {{$post->category->title }}</p>
                                 @notAuthor
-                                <p class=" badge text-bg-primary">{{ App\Models\User::find($post->user_id)->name }}</p>
+                                <p class=" badge text-bg-primary">{{ $post->user->name }}</p>
                                 @endnotAuthor
                             </div>
                         </td>

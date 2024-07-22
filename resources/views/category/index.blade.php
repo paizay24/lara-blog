@@ -27,7 +27,7 @@
               <th scope="row">{{ $category->id }}</th>
               <td>{{ $category->title }}</td>
               @notAuthor
-              <td>{{ App\Models\User::find($category->user_id)->name }}</td>
+              <td>{{ $category->user->name}}</td>
               @endnotAuthor
               <td><div class=" d-flex gap-2">
                 @can('delete',$category)
