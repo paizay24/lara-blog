@@ -14,6 +14,9 @@
             <tr>
               <th scope="col">#</th>
               <th scope="col">title</th>
+              @notAuthor
+              <th scope="col">Owner</th>
+              @endnotAuthor
               <th scope="col">Control</th>
               <th scope="col">Created_at</th>
             </tr>
@@ -23,6 +26,9 @@
             <tr>
               <th scope="row">{{ $category->id }}</th>
               <td>{{ $category->title }}</td>
+              @notAuthor
+              <td>{{ App\Models\User::find($category->user_id)->name }}</td>
+              @endnotAuthor
               <td><div class=" d-flex gap-2">
                 @can('delete',$category)
                 <form action="{{ route('category.destroy',$category->id) }}" method="POST" class=" inline-block">

@@ -50,13 +50,15 @@
 
                                 <p class=" badge text-bg-secondary">
                                     {{ App\Models\Category::find($post->category_id)->title }}</p>
+                                @notAuthor
                                 <p class=" badge text-bg-primary">{{ App\Models\User::find($post->user_id)->name }}</p>
+                                @endnotAuthor
                             </div>
                         </td>
                         <td class=" w-25">{{ Str::words($post->description, 10, '...') }}</td>
                         <td>
                             <div class=" d-flex gap-2">
-                                @can('delete-post', $post)
+                                @can('delete', $post)
                                     <form action="{{ route('post.destroy', $post->id) }}" method="POST" class=" inline-block">
                                         @csrf
                                         @method('delete')
@@ -68,7 +70,7 @@
                                     </form>
                                 @endcan
 
-                                @can('update-post', $post)
+                                @can('update', $post)
                                     <a href="{{ route('post.edit', $post->id) }}" class="btn btn-sm btn-outline-primary">
                                         <i class="bi bi-pencil"></i>
                                     </a>

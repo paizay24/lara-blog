@@ -17,11 +17,15 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::when(request('keyword'),function($q){
+        $posts = Post::when(request('keyword'), function ($q) {
             $keyword  = request('keyword');
-            $q->orWhere('title','like',"%$keyword%")
-            ->orWhere('description','like',"%$keyword%");
-        })->latest("id")->paginate(10)->withQueryString();
+            $q->orWhere('title', 'like', "%$keyword%")
+                ->orWhere('description', 'like', "%$keyword%");
+        })
+            ->when(Auth::user()->role === 'author', fn ($q) => $q->where('user_id', Auth::id()))
+            ->latest("id")
+            ->paginate(10)
+            ->withQueryString();
         return view('post.index', compact('posts'));
     }
 
@@ -61,7 +65,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('post.show',compact('post'));
+        Gate::authorize('view',$post);
+        return view('post.show', compact('post'));
     }
 
     /**
@@ -79,9 +84,7 @@ class PostController extends Controller
     {
 
 
-        if (! Gate::allows('update-post', $post)) {
-            return abort(403);
-        }
+        Gate::authorize('update',$post);
 
 
         $post->title = $request->title;
@@ -100,7 +103,6 @@ class PostController extends Controller
         }
         $post->update();
         return redirect()->route('post.index')->with(['status' => 'Post updated successfully']);
-
     }
 
     /**
@@ -108,16 +110,14 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        if(! Gate::allows('delete-post',$post)){
-            return abort(403);
-        }
+
+        Gate::authorize('delete',$post);
 
         $postTitle = $post->title;
-        if(isset($post->featured_image)){
-            Storage::delete('public/'.$post->featured_image);
+        if (isset($post->featured_image)) {
+            Storage::delete('public/' . $post->featured_image);
         }
         $post->delete();
         return redirect()->route('post.index')->with(['status' => "$postTitle deleted successfully"]);
-
     }
 }

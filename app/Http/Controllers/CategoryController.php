@@ -6,7 +6,7 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
-use App\Models\User;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -17,9 +17,12 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::latest()->get();
-        return view('category.index', compact('categories'));
+        $categories = Category::latest("id")
+            ->when(Auth::user()->role === 'author',fn($q)=>$q->where("user_id",Auth::id()))
+            ->get();
+        return view('category.index',compact('categories'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -63,7 +66,7 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        Gate::authorize('update',$category);
+        Gate::authorize('update', $category);
         $category->title = $request->title;
         $category->slug = Str::slug($request->title);
         $category->update();
@@ -75,7 +78,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        Gate::authorize('delete',$category);
+        Gate::authorize('delete', $category);
         $categoryTitle = $category->title;
         $category->delete();
         return redirect()->route('category.index')->with(['status' =>  $categoryTitle . " deleted successfully"]);
