@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Photo;
 use App\Models\Post;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -42,6 +43,8 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
+        //post save
+
         $post = new Post();
 
         $post->title = $request->title;
@@ -57,6 +60,25 @@ class PostController extends Controller
             $post->featured_image = $newName;
         }
         $post->save();
+
+        //post save finished
+
+        //photo saving
+        //save to storage
+        foreach ($request->photos as $photo) {
+
+            $newName = uniqid() . "_post_photo." . $photo->extension();
+            $photo->storeAs("public", $newName);
+            //save to db
+            $photo = new Photo();
+            $photo->name = $newName;
+            $photo->post_id = $post->id;
+            $photo->save();
+        }
+
+
+
+        //photos save finsished
         return redirect()->route('post.index')->with(['status' => 'Post created successfully']);
     }
 
@@ -65,7 +87,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        Gate::authorize('view',$post);
+        Gate::authorize('view', $post);
         return view('post.show', compact('post'));
     }
 
@@ -84,7 +106,7 @@ class PostController extends Controller
     {
 
 
-        Gate::authorize('update',$post);
+        Gate::authorize('update', $post);
 
 
         $post->title = $request->title;
@@ -102,6 +124,35 @@ class PostController extends Controller
             $post->featured_image = $newName;
         }
         $post->update();
+       
+
+
+
+        //photo updating
+        //update to storage
+
+
+
+    // Check if photos are present and is an array
+    if ($request->has('photos') && is_array($request->photos)) {
+        foreach ($request->photos as $photo) {
+            // Save to storage
+            $newName = uniqid() . "_post_photo." . $photo->extension();
+            $photo->storeAs("public", $newName);
+
+            // Save to db
+            $photo = new Photo();
+            $photo->post_id = $post->id;
+            $photo->name = $newName;
+            $photo->save();
+        }
+    }
+
+
+
+
+        //photos update finsished
+
         return redirect()->route('post.index')->with(['status' => 'Post updated successfully']);
     }
 
@@ -111,11 +162,20 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
 
-        Gate::authorize('delete',$post);
+        Gate::authorize('delete', $post);
 
         $postTitle = $post->title;
+
+
         if (isset($post->featured_image)) {
             Storage::delete('public/' . $post->featured_image);
+        }
+
+        foreach ($post->photos as $photo) {
+            //del form storage
+            Storage::delete('public/' . $photo->name);
+            //delete from db
+            $photo->delete();
         }
         $post->delete();
         return redirect()->route('post.index')->with(['status' => "$postTitle deleted successfully"]);

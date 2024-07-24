@@ -25,11 +25,36 @@
                             @enderror
                         </div>
                         <div class="mb-3">
+
+                            <label for="" class="form-label">Choose Featured Image</label>
+                            <input type="file" name="featured_image"
+                                class=" form-control @error('featured_image') is-invalid
+
+                            @enderror">
+                            @error('featured_image')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
                             <label for="" class="form-label">Post Description</label>
-                            <textarea name="description" class=" form-control @error('description') is-invalid @enderror" id="" cols="30" rows="5">
+                            <textarea name="description" class=" form-control @error('description') is-invalid @enderror" id=""
+                                cols="30" rows="5">
                             {{ old('description') }}
                         </textarea>
                             @error('description')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+
+                            <label for="" class="form-label">Choose Post Photos</label>
+                            <input type="file" name="photos[]"
+                                class=" form-control @error('photos') is-invalid @enderror @error('photos.*') is-invalid @enderror"
+                                multiple>
+                            @error('photos')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            @error('photos.*')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -49,17 +74,7 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="mb-3">
 
-                            <label for="" class="form-label">Choose Featured Image</label>
-                            <input type="file" name="featured_image"
-                                class=" form-control @error('featured_image') is-invalid
-
-                            @enderror">
-                            @error('featured_image')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
 
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>

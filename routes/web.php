@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NationController;
+use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -19,4 +20,5 @@ Route::middleware('auth')->group(function () {
     Route::resource('/post', PostController::class);
     Route::resource('/user', UserController::class);
     Route::resource('/nation', NationController::class);
+    Route::resource('/photos',PhotoController::class);
 });
