@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',[PageController::class,'index'])->name('page.index');
 Route::get('/detail/{slug}',[PageController::class,'detail'])->name('page.detail');
-Route::get('/categoryList/{category:slug}',[PageController::class,'postByCategory'])->name('page.category');
+Route::get('/showByCategory/{category:slug}',[PageController::class,'postByCategory'])->name('page.category');
+Route::get('/showByUser/{id}',[PageController::class,'postByUser'])->name('page.user');
 
 Auth::routes();
 

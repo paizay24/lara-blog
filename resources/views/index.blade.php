@@ -50,7 +50,11 @@
                             <p class="m-0">{{ $post->excerpt }}</p>
                             <div class=" mt-2 d-flex justify-content-between align-items-center">
                                 <div>
-                                    <p class=" mb-0">{{ $post->user->name }}</p>
+                                   <a href="{{ route('page.user',$post->user->id) }}">
+                                    <span class="badge bg-primary">
+                                        {{ $post->user->name }}
+                                    </span>
+                                   </a>
                                     <p class=" mb-0"> {{ $post->created_at->diffforHumans() }}</p>
                                 </div>
                                 <div>
