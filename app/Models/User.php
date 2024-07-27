@@ -53,4 +53,8 @@ class User extends Authenticatable
     public function isAuthor(){
         return $this->role === 'author';
     }
+
+    public function photos(){
+        return $this->hasManyThrough(Photo::class,Post::class);
+    }
 }

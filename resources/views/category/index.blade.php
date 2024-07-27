@@ -17,6 +17,7 @@
               @notAuthor
               <th scope="col">Owner</th>
               @endnotAuthor
+              <th>Post Count</th>
               <th scope="col">Control</th>
               <th scope="col">Created_at</th>
             </tr>
@@ -29,6 +30,7 @@
               @notAuthor
               <td>{{ $category->user->name}}</td>
               @endnotAuthor
+            <td>{{ $category->posts()->count() }}</td>
               <td><div class=" d-flex gap-2">
                 @can('delete',$category)
                 <form action="{{ route('category.destroy',$category->id) }}" method="POST" class=" inline-block">

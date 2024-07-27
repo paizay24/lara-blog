@@ -25,6 +25,7 @@ class PostController extends Controller
         })
             ->when(Auth::user()->role === 'author', fn ($q) => $q->where('user_id', Auth::id()))
             ->latest("id")
+            ->with(['category','user'])
             ->paginate(10)
             ->withQueryString();
         return view('post.index', compact('posts'));
@@ -124,7 +125,7 @@ class PostController extends Controller
             $post->featured_image = $newName;
         }
         $post->update();
-       
+
 
 
 

@@ -2,6 +2,9 @@
     <a class="list-group-item list-group-item-action" href="{{ route('home') }}">
         Home
     </a>
+    <a class="list-group-item list-group-item-action" href="{{ route('photos.index') }}">
+        User's photos
+    </a>
 
 
 
