@@ -5,7 +5,7 @@
             <div class="col-lg-6 col-12 ">
 
 
-                <h1 class=" text-center text-dark">Blog Page</h1>
+                <h1 class=" text-center">Blog Page</h1>
                 <div class="">
 
                     @isset($category)
