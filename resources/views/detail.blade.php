@@ -1,8 +1,8 @@
-@extends('master')
+@extends('templates.master')
 @section('content')
     <div class=" container">
         <div class=" row justify-content-center">
-            <div class=" col-12 col-lg6">
+            <div class=" col-12 col-lg-8">
                 <div class="card m-2 p-2 shadow-sm">
 
                     <div class="card-body">
@@ -58,6 +58,7 @@
                     </div>
                 </div>
             </div>
+            
         </div>
     </div>
 @endsection

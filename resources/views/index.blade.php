@@ -1,12 +1,9 @@
-@extends('master')
+@extends('templates.master')
 @section('content')
     <div class=" container">
         <div class="row justify-content-center">
-            <div class="col-lg-6 col-12 ">
-
-
-                <h1 class=" text-center">Blog Page</h1>
-                <div class="">
+            <div class="col-lg-8 col-12 ">
+                <div class=" mt-3">
 
                     @isset($category)
                         <div class="d-flex justify-content-between align-items-center mb-3">
@@ -26,13 +23,7 @@
                     </a>
                 @endif
                    </div>
-                    <form action="{{ route('page.index') }}" method="get">
-                        <div class="input-group mb-3">
-                            <input type="text" name="keyword" required class="form-control" placeholder="Search..." aria-label="Recipient's username"
-                                aria-describedby="button-addon2">
-                            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
-                        </div>
-                    </form>
+
                 </div>
 
                 @forelse ($posts as $post)
@@ -72,6 +63,9 @@
                     {{ $posts->onEachSide(1)->links() }}
                 </div>
 
+            </div>
+            <div class=" col-lg-4 col-12">
+                @include('templates.sidebar')
             </div>
 
         </div>

@@ -91,7 +91,7 @@
                             <label for="" class="form-label">Select Category</label>
                             <select name="category" form="updateForm" class="form-select  @error('category') is-invalid @enderror"
                                 aria-label="Default select example">
-                                @foreach(\App\Models\Category::all() as $category)
+                                @foreach($categories as $category)
                                 <option
                                     value="{{ $category->id }}"
                                     {{ $category->id == old('category',$post->category) ? 'selected':'' }}>
