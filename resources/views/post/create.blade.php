@@ -8,79 +8,50 @@
         </ol>
     </nav>
     <main>
-        <main>
-            <div class=" card">
-                <div class=" card-body">
-                    <h4>Create Post</h4>
 
-                    <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="title" class="form-label">Title</label>
-                            <input type="text" name="title" id="title" value="{{ old('title') }}"
-                                placeholder="Enter Post Title"
-                                class="form-control form-control-sm @error('title') is-invalid @enderror">
-                            @error('title')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
+        <x-card>
+            <x-slot:title>Create Post</x-slot:title>
+            <div class=" p-3">
+                <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <x-input name="title" label="Post label"></x-input>
 
-                            <label for="" class="form-label">Choose Featured Image</label>
-                            <input type="file" name="featured_image"
-                                class=" form-control @error('featured_image') is-invalid
+                    <x-input name="featured_image" label="Choose Featured Image" type="file"></x-input>
 
-                            @enderror">
-                            @error('featured_image')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">Post Description</label>
-                            <textarea name="description" class=" form-control @error('description') is-invalid @enderror" id=""
-                                cols="30" rows="5">
+                    <div class="mb-3">
+                        <label for="" class="form-label">Post Description</label>
+                        <textarea name="description" class=" form-control @error('description') is-invalid @enderror" id=""
+                            cols="30" rows="5">
                             {{ old('description') }}
                         </textarea>
-                            @error('description')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
+                        @error('description')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <x-input name="photos" label="Choose Photos" type="file" multipe="true"></x-input>
+                   
+                    <div class="mb-3">
 
-                            <label for="" class="form-label">Choose Post Photos</label>
-                            <input type="file" name="photos[]"
-                                class=" form-control @error('photos') is-invalid @enderror @error('photos.*') is-invalid @enderror"
-                                multiple>
-                            @error('photos')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                            @error('photos.*')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
+                        <label for="" class="form-label">Select Category</label>
+                        <select name="category" class="form-select  @error('category') is-invalid @enderror"
+                            aria-label="Default select example">
+                            @foreach (\App\Models\Category::all() as $category)
+                                <option value="{{ $category->id }}" {{ $category->id == old('category') ? 'selected' : '' }}>
+                                    {{ $category->title }}
+                                </option>
+                            @endforeach
 
-                            <label for="" class="form-label">Select Category</label>
-                            <select name="category" class="form-select  @error('category') is-invalid @enderror"
-                                aria-label="Default select example">
-                                @foreach (\App\Models\Category::all() as $category)
-                                    <option value="{{ $category->id }}"
-                                        {{ $category->id == old('category') ? 'selected' : '' }}>{{ $category->title }}
-                                    </option>
-                                @endforeach
-
-                            </select>
-                            @error('category')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        </select>
+                        @error('category')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
 
 
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-
-                </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>
+        </x-card>
+
         </main>
-    </main>
-@endsection
+    @endsection

@@ -9,24 +9,15 @@
     </nav>
     <main>
         <main>
-
-            <div class=" card">
-                <div class=" card-body">
-                    <h4>Create Post</h4>
-
+            <x-card>
+                <x-slot:title>Edit Post</x-slot:title>
+                <div class=" p-3">
                     <form action="{{ route('post.update',$post->id) }}" method="POST" id="updateForm" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
                     </form>
-                        <div class="mb-3">
-                            <label for="title" class="form-label">Title</label>
-                            <input type="text" name="title" id="title" form="updateForm" value="{{ old('title', $post->title)  }}"
-                                placeholder="Enter Post Title"
-                                class="form-control form-control-sm @error('title') is-invalid @enderror">
-                            @error('title')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+                    <x-input name="title" label="Post title" :default="$post->title"></x-input>
+
                         <div class="mb-3 ">
 
                             <label for="" class="form-label">Choose Featured Image</label>
@@ -107,10 +98,8 @@
 
 
                         <button type="submit" form="updateForm" class="btn btn-primary">Update</button>
-
-
                 </div>
-            </div>
+            </x-card>
 
         </main>
     </main>
